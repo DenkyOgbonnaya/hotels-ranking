@@ -16,7 +16,7 @@ export default {
         body: "#090702",
         heading: "#090702",
         faded: "#475569",
-        surface: "#F0F0F7F7",
+        paper: "#F0F0F7F7",
         card: "#F0F0F7F7",
         background: "#FFFFFF",
         border: "#dde2ec",
