@@ -25,8 +25,8 @@ const theme = createTheme({
     },
 
     background: {
-      default: "#FFFFFF",
-      paper: "#F0F0F7F7",
+      default: "#F0F0F7F7",
+      paper: "#ffffff",
     },
     muted: {
       main: "#BDBDBD",
@@ -85,6 +85,16 @@ const theme = createTheme({
       xxl: 1450,
       xxxl: 1550,
       xxxxl: 1650,
+    },
+  },
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        InputProps: {
+          disableUnderline: true,
+        },
+      },
+      styleOverrides: {},
     },
   },
 });
