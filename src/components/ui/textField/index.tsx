@@ -19,7 +19,7 @@ const TextInput = forwardRef<HTMLInputElement, Props>(function Input(
         <input
           name={name}
           className={twMerge(
-            "bg-input  w-full rounded-sm  py-2 px-3  text-body  border font-light  font-body text-sm focus:border-primary placeholder:text-faded leading-5  disabled:opacity-60 disabled:bg-faded disabled:bg-opacity-20 ",
+            "bg-input   w-full rounded-sm  py-[1rem] px-3  text-body  border font-light  font-body text-sm focus:outline-primary placeholder:text-faded leading-5  disabled:opacity-60 disabled:bg-faded disabled:bg-opacity-20 ",
             className,
             isErrored && "border-red-500"
           )}

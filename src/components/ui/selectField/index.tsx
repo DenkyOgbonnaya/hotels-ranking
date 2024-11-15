@@ -14,13 +14,13 @@ const SelectField = forwardRef<HTMLSelectElement, Props>(function Input(
     <>
       <label
         htmlFor={rest.id}
-        className="font-body flex flex-col text-sm flex-1 text-label mb-[4px] text-[0.9rem] leading-[1.5rem]"
+        className="font-body  flex flex-col text-sm flex-1 text-label mb-[4px] text-[0.9rem] leading-[1.5rem]"
       >
         {label && label}
 
         <select
           className={twMerge(
-            "bg-input  w-full rounded-sm  py-2 px-3  text-body  border font-light  font-body text-sm focus:border-primary placeholder:text-faded leading-5  disabled:opacity-60 disabled:bg-faded disabled:bg-opacity-20 ",
+            "bg-input  w-full rounded-sm  py-[1rem] px-3  text-body  border font-light  font-body text-sm focus:outline-primary placeholder:text-faded leading-5  disabled:opacity-60 disabled:bg-faded disabled:bg-opacity-20 ",
             className,
             isErrored && "border-red-500"
           )}

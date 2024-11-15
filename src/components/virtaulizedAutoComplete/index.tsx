@@ -4,8 +4,7 @@ import TextField, {
   OutlinedTextFieldProps,
   TextFieldProps,
 } from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
+
 import Autocomplete, {
   AutocompleteChangeReason,
   AutocompleteChangeDetails,
@@ -17,7 +16,7 @@ type MuiAutocompleteProps = muiProps<any, boolean, boolean, boolean>;
 
 export interface AutocompleteProps {
   name: string;
-  labelText?: string;
+  label?: string;
   required?: boolean;
   inputRef?: Ref<any>;
   allowNull?: boolean;
@@ -66,10 +65,10 @@ export interface AutocompleteProps {
 export default function MyAutocomplete({
   inputRef,
   name,
-  labelText,
+  label,
   required,
   allowNull = true,
-  nullDisplay = "None",
+  nullDisplay = "",
   value = "",
   isLoading,
   disable,
@@ -113,20 +112,6 @@ export default function MyAutocomplete({
     [memoizedOptions, nullDisplay, multiple, name]
   );
 
-  // const getOptionSelected = useCallback(
-  //   (option, value) => {
-  //     if (typeof option === "string" && typeof value === "string")
-  //       return option === value;
-  //     if (typeof option === "object") {
-  //       if (value && typeof value === "object")
-  //         return option[accessor] === value[accessor];
-  //       return option[accessor] === value;
-  //     }
-  //     return false;
-  //   },
-  //   [accessor]
-  // );
-
   if (isLoading && showPlaceHolderOnLoading) return <p>Loading...</p>;
   if (virtualized)
     props.ListboxComponent = ListBox as React.ComponentType<
@@ -134,13 +119,18 @@ export default function MyAutocomplete({
     >;
 
   return (
-    <FormControl variant="outlined" className={className}>
+    <label className="font-body  flex flex-col text-sm flex-1 text-label mb-[4px] text-[0.9rem] leading-[1.5rem]">
+      {label}
       <Autocomplete
         style={{
-          width: "100%",
-          borderColor: "red",
+          width: "300px",
           height: "20px",
           padding: "1px",
+        }}
+        sx={{
+          padding: "0px",
+          width: "100%",
+          fontSize: "10px",
         }}
         {...props}
         autoComplete
@@ -148,7 +138,6 @@ export default function MyAutocomplete({
         options={memoizedOptions}
         value={multiple ? value : !allowNull ? value : value ?? ""}
         clearOnBlur
-        // getOptionSelected={getOptionSelected}
         getOptionLabel={getOptionLabel}
         loading={isLoading}
         disabled={disable}
@@ -159,7 +148,7 @@ export default function MyAutocomplete({
               {...textFieldProps}
               inputRef={inputRef}
               name={name}
-              label={labelText}
+              // label={labelText}
               variant="outlined"
               required={required}
               InputProps={{
@@ -167,11 +156,16 @@ export default function MyAutocomplete({
                 ...params.InputProps,
                 autoComplete: "off",
               }}
+              sx={{
+                fontSize: "10px",
+              }}
+              style={{
+                fontSize: "10px",
+              }}
             />
           );
         }}
       />
-      <FormHelperText error={Boolean(error)}>{error}</FormHelperText>
-    </FormControl>
+    </label>
   );
 }

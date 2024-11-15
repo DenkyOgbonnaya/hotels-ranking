@@ -51,19 +51,21 @@ export function HotelForm({ onSuccess, hotel }: Props) {
       <h4 className="font-heading text-2xl text-heading leading-9 mb-8">
         {hotel ? "Edit" : "Add"} Hotel
       </h4>
-      <div className="flex flex-col md:flex-row lg:items-center gap-4">
-        <TextField
-          id="name"
-          name="name"
-          label="Name"
-          value={state.name}
-          onChange={onChange}
-          placeholder="Enter name"
-          className="w-full lg:flex-1 "
-          required
-        />
 
+      <TextField
+        id="name"
+        name="name"
+        label="Name"
+        value={state.name}
+        onChange={onChange}
+        placeholder="Enter name"
+        className="w-full lg:flex-1 "
+        required
+      />
+
+      <div className="w-full lg:flex-1 mb-6">
         <VirtualizedAutocomplete
+          label="Country"
           name="country"
           accessor="country"
           name_accessor="country"

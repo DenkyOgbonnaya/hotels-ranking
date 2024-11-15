@@ -16,7 +16,7 @@ export default function useInputChange<T>(val: T) {
       | ChangeEvent<HTMLSelectElement>
       | ChangeEvent<HTMLTextAreaElement>
   ) => {
-    // @ts-ignore
+    // @ts-expect-error
     const value = e.target.checked || e.target.value;
 
     setState((curr) => ({

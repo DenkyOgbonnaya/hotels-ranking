@@ -4,7 +4,7 @@ import { ALLOWED_CHARS, NO_SPECIAL_CHAR_REGEX } from "@/constants/app.constant";
 export const sanitizeInputs = <T>(record: T) => {
   const errors: Record<string, string> = {};
 
-  for (let key in record) {
+  for (const key in record) {
     if (!NO_SPECIAL_CHAR_REGEX.test(String(record[key]))) {
       errors[key] = ALLOWED_CHARS;
     }

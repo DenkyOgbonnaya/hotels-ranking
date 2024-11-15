@@ -35,16 +35,26 @@ export default function Categories() {
     setShowConfirmDelete(!showConfirmDelete);
   };
 
-  const handleEdit = useCallback((category: ICategory) => {
-    // set the category to edit to the global store
-    dispatch(setCategory(category));
-    toggleForm();
-  }, []);
+  const toggleForm = () => {
+    setShowCategoryForm(!showCategoryForm);
+  };
 
-  const handleDelete = useCallback((category: ICategory) => {
-    dispatch(setCategory(category));
-    toggleConfirmDelete();
-  }, []);
+  const handleEdit = useCallback(
+    (category: ICategory) => {
+      // set the category to edit to the global store
+      dispatch(setCategory(category));
+      toggleForm();
+    },
+    [dispatch, toggleForm]
+  );
+
+  const handleDelete = useCallback(
+    (category: ICategory) => {
+      dispatch(setCategory(category));
+      toggleConfirmDelete();
+    },
+    [dispatch, toggleConfirmDelete]
+  );
 
   const handleSuccess = (message: string) => {
     toggleForm();
@@ -56,8 +66,9 @@ export default function Categories() {
 
   // confirm deletion of category
   const confirmDelete = () => {
+    if (!category) return;
     // delete category
-    dispatch(removeCategory(category?._id!));
+    dispatch(removeCategory(category._id!));
     setSuccessMessage("Category deleted successfully");
     toggleConfirmDelete();
   };
@@ -68,10 +79,6 @@ export default function Categories() {
 
     // clear the cateogry reference from the store
     dispatch(setCategory(null));
-  };
-
-  const toggleForm = () => {
-    setShowCategoryForm(!showCategoryForm);
   };
 
   const handleBack = () => {

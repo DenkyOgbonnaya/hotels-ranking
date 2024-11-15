@@ -34,16 +34,22 @@ export default function HotelList() {
     setShowConfirmDelete(!showConfirmDelete);
   };
 
-  const handleEdit = useCallback((hotel: IHotel) => {
-    // set the hotel to edit to the global store
-    dispatch(setHotel(hotel));
-    toggleHotelForm();
-  }, []);
+  const handleEdit = useCallback(
+    (hotel: IHotel) => {
+      // set the hotel to edit to the global store
+      dispatch(setHotel(hotel));
+      toggleHotelForm();
+    },
+    [dispatch, toggleHotelForm]
+  );
 
-  const handleDelete = useCallback((hotel: IHotel) => {
-    dispatch(setHotel(hotel));
-    toggleConfirmDelete();
-  }, []);
+  const handleDelete = useCallback(
+    (hotel: IHotel) => {
+      dispatch(setHotel(hotel));
+      toggleConfirmDelete();
+    },
+    [dispatch, toggleConfirmDelete]
+  );
 
   const handleEditSuccess = () => {
     toggleHotelForm();
@@ -55,8 +61,9 @@ export default function HotelList() {
 
   // confirm deletion of hotel
   const confirmDelete = () => {
+    if (!hotel) return;
     // delete hotel
-    dispatch(removeHotel(hotel?._id!));
+    dispatch(removeHotel(hotel._id!));
     setSuccessMessage("Hotel deleted successfully");
     toggleConfirmDelete();
   };
