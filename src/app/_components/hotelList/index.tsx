@@ -5,9 +5,13 @@ import ListComponent from "@/components/listComponent";
 import { Modal } from "@mui/material";
 import { useState } from "react";
 import { HotelForm } from "../hotelForm";
+import { IHotel } from "@/types/hotel.type";
+import { useStoreSelector } from "@/hooks/useStoreSelector";
+import Jumbotron from "@/components/jumbotron";
 
 export default function HotelList() {
   const [showHotelForm, setShowHotelForm] = useState(false);
+  const { hotels } = useStoreSelector(({ hotels }) => hotels);
 
   const toggleHotelForm = () => {
     setShowHotelForm(!showHotelForm);
@@ -20,11 +24,19 @@ export default function HotelList() {
   const handleDelete = () => {};
   return (
     <div className="flex flex-col gap-4">
-      <ListComponent<number>
-        data={[1, 2, 3, 4, 5]}
-        renderItem={(item) => (
-          <Hotel key={item} onEdit={handleEdit} onDelete={handleDelete} />
+      <ListComponent<IHotel>
+        data={hotels}
+        renderItem={(hotel) => (
+          <Hotel
+            key={hotel._id}
+            hotel={hotel}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
         )}
+        ListEmptyComponent={
+          <Jumbotron message="No aavailable hotels" data-testid="hotel-empty" />
+        }
       />
 
       <Modal

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { inter, openSans, roboto } from "@/styles/styles.font";
+import { Providers } from "./Providers";
 
 // app meta
 export const metadata: Metadata = {
@@ -19,7 +20,7 @@ export default function RootLayout({
       <body
         className={`${openSans.variable} ${inter.variable} ${roboto.variable} antialiased`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
