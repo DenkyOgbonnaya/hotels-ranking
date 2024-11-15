@@ -96,6 +96,30 @@ const theme = createTheme({
       },
       styleOverrides: {},
     },
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          // width: "300px",
+          maxHeight: "20px",
+          backgroundColor: "#f9f9f9",
+          padding: "0px",
+        },
+        inputRoot: {
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "blue",
+            padding: "0px",
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "darkblue",
+            padding: "0px",
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "green",
+            padding: "0px",
+          },
+        },
+      },
+    },
   },
 });
 

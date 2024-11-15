@@ -6,12 +6,14 @@ import { getHotels, setHotels } from "@/utils/localStorage";
 
 interface HotelState {
   hotels: IHotel[];
+  hotel: IHotel | null;
 }
 // get saved hotels from local stroage
 const hotels = getHotels();
 
 const initialState: HotelState = {
   hotels,
+  hotel: null, // holds reference to a single hotel
 };
 
 export const hotelSlice = createSlice({
@@ -37,6 +39,7 @@ export const hotelSlice = createSlice({
         (item) => item._id != action.payload
       );
       state.hotels = filteredHotels;
+      state.hotel = null;
 
       // update local storage
       setHotels(filteredHotels);
@@ -54,10 +57,16 @@ export const hotelSlice = createSlice({
       // update local storage as well
       setHotels(updatedHotels);
     },
+
+    // set a single hotel
+    setHotel: (state, action: PayloadAction<IHotel | null>) => {
+      state.hotel = action.payload;
+    },
   },
 });
 
-export const { addHotel, removeHotel, updateHotel } = hotelSlice.actions;
+export const { addHotel, removeHotel, updateHotel, setHotel } =
+  hotelSlice.actions;
 
 export const selectHotel = (state: RootState) => state.hotels;
 

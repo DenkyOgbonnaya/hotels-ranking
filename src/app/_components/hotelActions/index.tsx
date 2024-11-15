@@ -3,23 +3,51 @@
 import Button from "@/components/ui/button";
 import SearchField from "@/components/ui/searchField";
 import Modal from "@mui/material/Modal";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 import { useState } from "react";
 import { HotelForm } from "../hotelForm";
+import { useStoreSelector } from "@/hooks/useStoreSelector";
 
 export default function HotelActions() {
   const [showHotelForm, setShowHotelForm] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const { hotel } = useStoreSelector(({ hotels }) => hotels);
 
   const toggleHotelForm = () => {
     setShowHotelForm(!showHotelForm);
+  };
+
+  const handleAddSuccess = () => {
+    toggleHotelForm();
+
+    setSuccessMessage("New hotel added successfully");
   };
   return (
     <>
       <div className="flex items-center gap-2">
         <SearchField placeholder="Search" className="flex-1" />
-        <Button onClick={toggleHotelForm} className=" w-[150px] px-2 p-2 ">
+        <Button
+          onClick={toggleHotelForm}
+          className=" w-[150px] px-2 p-2 "
+          data-testid="add-hotel"
+        >
           Add New
         </Button>
       </div>
+      <Stack sx={{ width: "100%" }} spacing={2}>
+        {successMessage && (
+          <Alert
+            severity="success"
+            onClose={() => {
+              setSuccessMessage("");
+            }}
+          >
+            {successMessage}
+          </Alert>
+        )}
+      </Stack>
 
       <Modal
         open={showHotelForm}
@@ -28,7 +56,7 @@ export default function HotelActions() {
         aria-describedby="modal-modal-description"
         className="flex justify-center items-center"
       >
-        <HotelForm />
+        <HotelForm hotel={hotel} onSuccess={handleAddSuccess} />
       </Modal>
     </>
   );
