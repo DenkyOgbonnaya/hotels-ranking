@@ -4,12 +4,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query/react";
 import hotelSlice from "./slice/hotel.slice";
 import { countriesApi } from "@/services/country.service";
+import categoriesSlice from "./slice/categories.slice";
 
 export const store = configureStore({
   reducer: {
     [countriesApi.reducerPath]: countriesApi.reducer,
     hotels: hotelSlice,
+    categories: categoriesSlice,
   },
+
   devTools: process.env.NODE_ENV !== "production",
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
