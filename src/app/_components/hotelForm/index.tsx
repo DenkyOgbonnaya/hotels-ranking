@@ -9,13 +9,17 @@ import VirtualizedAutocomplete from "@/components/virtaulizedAutoComplete";
 import { FormEvent } from "react";
 import { useStoreDispatch } from "@/hooks/useStoreDispatch";
 import { addHotel, updateHotel } from "@/store/slice/hotel.slice";
+import { useStoreSelector } from "@/hooks/useStoreSelector";
+import SelectField from "@/components/ui/selectField";
 
 interface Props {
   onSuccess: () => void;
   hotel?: IHotel | null;
 }
 export function HotelForm({ onSuccess, hotel }: Props) {
+  const { categories } = useStoreSelector(({ categories }) => categories);
   const { data } = useGetCountriesQuery(null);
+
   const dispatch = useStoreDispatch();
 
   const { state, onChange, onChangeByNameValue } =
@@ -71,16 +75,22 @@ export function HotelForm({ onSuccess, hotel }: Props) {
         />
       </div>
 
-      <TextField
+      <SelectField
         id="category"
         name="category"
         value={state.category}
         onChange={onChange}
         label="Category"
-        placeholder="Enter category"
         className="w-full flex-1 "
         required
-      />
+      >
+        <option value="">Select-</option>
+        {categories?.map((cat) => (
+          <option key={cat._id} value={cat.name}>
+            {cat.name}
+          </option>
+        ))}
+      </SelectField>
 
       <TextArea
         id="address"

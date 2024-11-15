@@ -22,10 +22,10 @@ export const hotelSlice = createSlice({
   reducers: {
     addHotel: (state, action: PayloadAction<IHotelCreateInput>) => {
       // generate a new unique id
-      const id = new Date().getTime();
+      const id = new Date().toISOString();
 
       const newHotel: IHotel = {
-        _id: id.toString(),
+        _id: id,
         ...action.payload,
       };
 
@@ -62,11 +62,34 @@ export const hotelSlice = createSlice({
     setHotel: (state, action: PayloadAction<IHotel | null>) => {
       state.hotel = action.payload;
     },
+    filterByCategories: (
+      state,
+      action: PayloadAction<{ categories: string[] }>
+    ) => {
+      // get hotels form local storage
+      const hotels = getHotels();
+
+      const filteredHotels = hotels.filter((item) =>
+        action.payload.categories.includes(item.category)
+      );
+
+      // restore hotels from store if no category selection
+      if (action.payload.categories.length < 1) {
+        state.hotels = hotels;
+      } else {
+        state.hotels = filteredHotels;
+      }
+    },
   },
 });
 
-export const { addHotel, removeHotel, updateHotel, setHotel } =
-  hotelSlice.actions;
+export const {
+  addHotel,
+  removeHotel,
+  updateHotel,
+  setHotel,
+  filterByCategories,
+} = hotelSlice.actions;
 
 export const selectHotel = (state: RootState) => state.hotels;
 
