@@ -1,7 +1,7 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import { IHotel, IHotelCreateInput } from "@/types/hotel.type";
+import { IHotel, IHotelCreateInput, SortOrder } from "@/types/hotel.type";
 import { getHotels, setHotels } from "@/utils/localStorage";
 
 interface HotelState {
@@ -80,6 +80,28 @@ export const hotelSlice = createSlice({
         state.hotels = filteredHotels;
       }
     },
+
+    sortByName: (
+      state,
+      action: PayloadAction<{ order: SortOrder | string }>
+    ) => {
+      // get hotels form local storage
+      const hotels = getHotels();
+
+      const sortOrder = action.payload.order;
+
+      let sortedHotels = [];
+
+      if (sortOrder === "Ascending") {
+        // sort in ascending order
+        sortedHotels = hotels.sort((a, b) => a.name.localeCompare(b.name));
+      } else {
+        // sort in descending order
+        sortedHotels = hotels.sort((a, b) => b.name.localeCompare(a.name));
+      }
+
+      state.hotels = sortedHotels;
+    },
   },
 });
 
@@ -89,6 +111,7 @@ export const {
   updateHotel,
   setHotel,
   filterByCategories,
+  sortByName,
 } = hotelSlice.actions;
 
 export const selectHotel = (state: RootState) => state.hotels;

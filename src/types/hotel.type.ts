@@ -10,3 +10,5 @@ export interface IHotelCreateInput {
 export interface IHotel extends IHotelCreateInput {
   _id: string;
 }
+
+export type SortOrder = "Ascending" | "Descending";

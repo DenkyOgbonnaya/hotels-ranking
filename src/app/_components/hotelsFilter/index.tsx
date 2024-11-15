@@ -8,7 +8,8 @@ import { CATEGORIES_ROUTE } from "@/constants/route.constant";
 import { useStoreSelector } from "@/hooks/useStoreSelector";
 import { useStoreDispatch } from "@/hooks/useStoreDispatch";
 import { useState } from "react";
-import { filterByCategories } from "@/store/slice/hotel.slice";
+import { filterByCategories, sortByName } from "@/store/slice/hotel.slice";
+import { SortOrder } from "@/types/hotel.type";
 
 export default function HotelsFilter() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -21,6 +22,7 @@ export default function HotelsFilter() {
     router.push(CATEGORIES_ROUTE);
   };
 
+  // sort hotels by name
   const handleCategoryFilter = (category: string) => {
     if (selectedCategories.includes(category)) {
       const filtered = selectedCategories.filter((item) => item !== category);
@@ -34,9 +36,13 @@ export default function HotelsFilter() {
       setSelectedCategories((prev) => prev.concat(category));
     }
   };
+
+  const handleSorting = (sortOrder: string | SortOrder) => {
+    dispatch(sortByName({ order: sortOrder }));
+  };
   return (
     <div className="flex flex-col gap-4">
-      <SelectField>
+      <SelectField onChange={(e) => handleSorting(e.target.value)}>
         <option value="">Sort order</option>
         <option value="Ascending">Ascending</option>
         <option value="Descending">Descending</option>
