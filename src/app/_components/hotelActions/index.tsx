@@ -8,12 +8,16 @@ import Stack from "@mui/material/Stack";
 import { useState } from "react";
 import { HotelForm } from "../hotelForm";
 import { useStoreSelector } from "@/hooks/useStoreSelector";
+import { useStoreDispatch } from "@/hooks/useStoreDispatch";
+import { searchByName } from "@/store/slice/hotel.slice";
 
 export default function HotelActions() {
   const [showHotelForm, setShowHotelForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
   const { hotel } = useStoreSelector(({ hotels }) => hotels);
+
+  const dispatch = useStoreDispatch();
 
   const toggleHotelForm = () => {
     setShowHotelForm(!showHotelForm);
@@ -24,13 +28,31 @@ export default function HotelActions() {
 
     setSuccessMessage("New hotel added successfully");
   };
+
+  const handleSearch = (searchString: string) => {
+    const DEBOUNCE_DELAY = 3000; // 3sec in ms
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    if (timeoutId !== null) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      dispatch(searchByName({ search: searchString }));
+    }, DEBOUNCE_DELAY);
+  };
+
   return (
     <>
       <div className="flex items-center gap-2">
-        <SearchField placeholder="Search" className="flex-1" />
+        <SearchField
+          placeholder="Search"
+          onChange={({ target }) => handleSearch(target.value)}
+          className="flex-1"
+        />
         <Button
           onClick={toggleHotelForm}
-          className=" w-[150px] px-2 p-2 "
+          className=" w-[200px] px-2 p-2 "
           data-testid="add-hotel"
         >
           Add New

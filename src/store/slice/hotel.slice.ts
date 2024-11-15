@@ -102,6 +102,18 @@ export const hotelSlice = createSlice({
 
       state.hotels = sortedHotels;
     },
+
+    searchByName: (state, action: PayloadAction<{ search: string }>) => {
+      // get hotels form local storage
+      const hotels = getHotels();
+      const searchString = action.payload.search;
+
+      const searchResult = hotels.filter((hotel) =>
+        hotel.name.toLowerCase().includes(searchString.toLowerCase() || "")
+      );
+
+      state.hotels = searchResult;
+    },
   },
 });
 
@@ -112,6 +124,7 @@ export const {
   setHotel,
   filterByCategories,
   sortByName,
+  searchByName,
 } = hotelSlice.actions;
 
 export const selectHotel = (state: RootState) => state.hotels;
